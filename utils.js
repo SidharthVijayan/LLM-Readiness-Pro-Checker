@@ -1,3 +1,9 @@
 function rewriteText(text) {
-  return "Answer: " + text.slice(0, 200);
+  if (!text) return "No content";
+
+  if (text.length > 200) {
+    return text.split(".").map(t => "• " + t.trim()).join("\n");
+  }
+
+  return "Answer: " + text;
 }
