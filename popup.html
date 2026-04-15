@@ -9,18 +9,14 @@
 
 <div class="app">
 
-  <div class="header">
-    <h1>LLM Readiness</h1>
-    <span class="badge">PRO</span>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="title">LLM Readiness</div>
+    <div class="ring" id="ring"><span id="score">--</span></div>
+    <div class="status" id="status"></div>
   </div>
 
-  <div class="score-wrapper">
-    <div class="score-ring" id="scoreRing">
-      <span id="score">--</span>
-    </div>
-    <p>Overall Score</p>
-  </div>
-
+  <!-- METRICS -->
   <div class="metrics">
     <div class="metric"><span>Markdown</span><b id="markdown"></b></div>
     <div class="metric"><span>Extractability</span><b id="extract"></b></div>
@@ -28,19 +24,20 @@
     <div class="metric"><span>Conversion</span><b id="conversion"></b></div>
   </div>
 
-  <div class="panel">
-    <h3>Top Issues</h3>
-    <ul id="issues"></ul>
+  <!-- PANELS -->
+  <div class="panel" onclick="toggle('issues')">
+    <div class="panel-title">Issues</div>
+    <ul id="issues" class="collapsed"></ul>
   </div>
 
-  <div class="panel">
-    <h3>Quick Fixes</h3>
-    <ul id="fixes"></ul>
+  <div class="panel" onclick="toggle('fixes')">
+    <div class="panel-title">Fixes</div>
+    <ul id="fixes" class="collapsed"></ul>
   </div>
 
-  <div class="panel">
-    <h3>Section Analysis</h3>
-    <div id="sections"></div>
+  <div class="panel" onclick="toggle('sections')">
+    <div class="panel-title">Sections</div>
+    <div id="sections" class="collapsed"></div>
   </div>
 
   <button id="export">Export Report</button>
