@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LLM Readiness Pro",
-  "version": "4.1",
+  "version": "5.0",
   "permissions": ["activeTab", "scripting", "downloads"],
   "host_permissions": ["<all_urls>"],
   "action": {
@@ -10,7 +10,8 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["utils.js", "content.js"]
+      "css": ["injector.css"],
+      "js": ["utils.js", "overlay.js", "content.js"]
     }
   ]
 }
