@@ -2,52 +2,55 @@ chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
 
   if (req.action === "analyze") {
 
-    try {
-      const text = document.body?.innerText || "";
+    const text = document.body.innerText || "";
+    const words = text.split(/\s+/).filter(Boolean);
+    const sentences = text.split(/[.!?]+/).filter(Boolean);
 
-      if (!text || text.length < 50) {
-        sendResponse({ error: "No readable content" });
-        return;
-      }
+    const wordCount = words.length;
+    const avgSentence = sentences.length ? wordCount / sentences.length : 0;
 
-      const words = text.split(/\s+/);
-      const unique = new Set(words);
+    const unique = new Set(words);
+    const redundancy = 1 - unique.size / wordCount;
 
-      const redundancy = 1 - unique.size / words.length;
+    const h2 = document.querySelectorAll("h2").length;
+    const lists = document.querySelectorAll("ul, ol").length;
 
-      const sentences = text.split(/[.!?]+/).filter(Boolean);
-      const avgSentence = sentences.length
-        ? words.length / sentences.length
-        : 0;
+    const hasFAQ = /faq/i.test(text);
+    const hasCTA = /buy|contact|sign up/i.test(text);
 
-      const h2s = [...document.querySelectorAll("h2")];
+    let markdown = 100 - (h2 === 0 ? 25 : 0) - (lists === 0 ? 15 : 0);
+    let extract = 100 - (!hasFAQ ? 20 : 0);
+    let token = 100 - (avgSentence > 25 ? 20 : 0) - (redundancy > 0.3 ? 25 : 0);
+    let conversion = 100 - (!hasCTA ? 30 : 0);
 
-      const sections = h2s.map(h2 => ({
-        title: h2.innerText || "Section",
-        score: 80,
-        issues: [],
-        rewrite: "Content can be improved with bullets and clarity"
-      }));
+    const finalScore = Math.round(
+      markdown * 0.3 +
+      extract * 0.3 +
+      token * 0.25 +
+      conversion * 0.15
+    );
 
-      const result = {
-        llm_readiness_score: 70,
-        scores: {
-          markdown: h2s.length ? 80 : 60,
-          extractability: text.includes("faq") ? 80 : 60,
-          token_efficiency: redundancy < 0.3 ? 80 : 60,
-          conversion: text.includes("contact") ? 80 : 60
-        },
-        sections,
-        top_issues: ["Structure can improve", "No FAQ"],
-        quick_fixes: ["Add headings", "Add FAQ"]
-      };
+    sendResponse({
+      llm_readiness_score: finalScore,
+      scores: {
+        markdown,
+        extractability: extract,
+        token_efficiency: token,
+        conversion
+      },
+      stats: { wordCount, avgSentence, redundancy },
+      top_issues: [
+        h2 === 0 && "Missing headings",
+        !hasFAQ && "No FAQ",
+        avgSentence > 25 && "Long sentences"
+      ].filter(Boolean),
+      quick_fixes: [
+        "Add H2 sections",
+        "Add FAQ",
+        "Break paragraphs"
+      ]
+    });
 
-      sendResponse(result);
-
-    } catch (e) {
-      console.error("LLM Analyzer Error:", e);
-      sendResponse({ error: "Script failed" });
-    }
   }
 
   return true;
