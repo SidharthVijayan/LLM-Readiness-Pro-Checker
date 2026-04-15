@@ -1,50 +1,47 @@
 # 🔍 LLM Readiness Pro
 
-A Chrome Extension that analyzes how well your content performs for AI systems like ChatGPT and Google AI Overviews.
+AI-first Chrome Extension for optimizing content for Large Language Models.
 
 ---
 
 ## 🚀 Features
 
-- Markdown structure scoring
-- LLM extractability analysis
-- Token efficiency detection
-- Conversion readiness insights
-- Section-level scoring
-- AI-style rewrite suggestions
-- Exportable reports
+- Markdown structure analysis  
+- LLM extractability scoring  
+- Token efficiency detection  
+- Conversion readiness insights  
+- Section-level scoring  
+- Rewrite suggestions  
+- Exportable audit reports  
+
+---
+
+## 🧠 Why This Matters
+
+Search is shifting from ranking → extraction.
+
+This tool helps content perform in:
+
+- ChatGPT  
+- Google AI Overviews  
+- Perplexity  
 
 ---
 
 ## ⚙️ Installation
 
-1. Download repo  
-2. Go to chrome://extensions  
-3. Enable Developer Mode  
-4. Click Load Unpacked  
-5. Select folder  
+1. Open chrome://extensions  
+2. Enable Developer Mode  
+3. Click "Load Unpacked"  
+4. Select project folder  
 
 ---
 
-## 🧠 Why It Matters
-
-Search is shifting from:
-
-Ranking → Extraction
-
-This tool helps optimize for:
-
-- ChatGPT
-- Google AI Overviews
-- Perplexity
-
----
-
-## 💡 Key Insight
+## 💡 Positioning
 
 This is not SEO.
 
-This is AI optimization.
+This is **AI Readiness Optimization**.
 
 ---
 
